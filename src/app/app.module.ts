@@ -5,8 +5,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {FormsModule} from "@angular/forms";
-import {MatIconModule, MatInputModule} from "@angular/material";
+import {FormsModule} from '@angular/forms';
+import {MatIconModule, MatInputModule} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
 import {AddMovieComponent, AppComponent} from './app.component';

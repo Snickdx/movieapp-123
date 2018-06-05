@@ -1,8 +1,8 @@
 ///<reference path="../../node_modules/@angular/core/src/di/metadata.d.ts"/>
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
-import {Component, Inject, OnInit} from '@angular/core'
-import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material"
-import {DataLayer} from "./app.service";
+import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {DataLayer} from './app.service';
 
 @Component({
   selector: 'app-root',
@@ -12,14 +12,12 @@ import {DataLayer} from "./app.service";
 })
 export class AppComponent implements OnInit {
   displayedColumns = ['id', 'title', 'genre', 'rating', 'cost'];
-  dataSource:any;
+  dataSource: any;
   newtitle: string;
   newgenre: string;
   newrating: string;
   newcost: string;
-  data: any;
   bigID: number;
-  values:string = "";
   searchResults: string[];
 
   MOVIES: MovieElement[];
@@ -27,25 +25,23 @@ export class AppComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     public dataLayer: DataLayer,
-    )
-  {}
+    ) {}
 
   onKey(value: string) {
     this.searchResults = [];
     this.MOVIES.forEach(each_obj => {
-      if (each_obj.title == undefined) console.log("undefined object")
+      if (each_obj.title === undefined) { console.log('undefined object'); }
       else {
         if (each_obj.title.includes(value)) {
           this.searchResults.push(each_obj.title);
         }
       }
-
-    })
+    });
 
   }
 
   ngOnInit() {
-    this.dataLayer.getMovies().subscribe((fetchedMovies:MovieElement[]) => {
+    this.dataLayer.getMovies().subscribe((fetchedMovies: MovieElement[]) => {
       console.log(fetchedMovies);
       this.MOVIES = fetchedMovies;
       this.dataSource = fetchedMovies;
@@ -53,10 +49,11 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+
   openDialog(): void {
-    let dialogRef = this.dialog.open(AddMovieComponent, {
+    const dialogRef = this.dialog.open(AddMovieComponent, {
       width: '300px',
-      height: '65%',
       data: {
         title: this.newtitle,
         genre: this.newgenre,
@@ -67,13 +64,19 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      if (result == undefined) { console.log ("No data submitted..."); } // Empty form
+      if (result === undefined) { console.log ('No data submitted...'); } // Empty form
       else {
-
-
         result.id = this.bigID;
-        this.MOVIES.push(result);
-        this.dataLayer.postMovie(result).subscribe(data => this.MOVIES.push(data));
+        this.dataSource.push(result);
+        this.dataLayer.postMovie(result).subscribe(data => {
+            this.dataSource.push(data);
+            this.dataLayer.getMovies().subscribe((fetchedMovies: MovieElement[]) => {
+                console.log(fetchedMovies);
+                this.MOVIES = fetchedMovies;
+                this.dataSource = fetchedMovies;
+                this.bigID = fetchedMovies.length + 1;
+            });
+        });
       }
 
     });
@@ -82,7 +85,7 @@ export class AppComponent implements OnInit {
 }
 
 export interface MovieElement {
-  id: number,
+  id: number;
   title: string;
   genre: string;
   rating: number;
@@ -99,7 +102,7 @@ export interface MovieElement {
 // ]
 
 @Component({
-  selector: 'add-movie',
+  selector: 'app-add-movie',
   templateUrl: 'add-movie.html',
 })
 export class AddMovieComponent {
@@ -113,9 +116,15 @@ export class AddMovieComponent {
     this.dialogRef.close();
   }
 
-  onSubmit() {
-    console.log("submitted...");
-  }
+  onSubmit(data: any) {
+      console.log('submitted...');
+      console.log(data);
+      if ((data.title !== undefined) && (data.genre !== undefined) &&
+          (data.rating !== undefined) && (data.cost !== undefined)) {
+          this.dialogRef.close(data);
+      }
 
+
+  }
 }
 
