@@ -1,6 +1,6 @@
 ///<reference path="../../node_modules/@angular/core/src/di/metadata.d.ts"/>
 ///<reference path="../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
-import {ChangeDetectorRef, Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
 import {DataLayer} from './app.service';
 
@@ -107,24 +107,26 @@ export interface MovieElement {
 })
 export class AddMovieComponent {
 
-  constructor(
-    public dialogRef: MatDialogRef<AddMovieComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-  }
+    constructor(
+        public dialogRef: MatDialogRef<AddMovieComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: any) {
+    }
 
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
+    onNoClick(): void {
+        this.dialogRef.close();
+    }
 
-  onSubmit(data: any) {
-      console.log('submitted...');
-      console.log(data);
-      if ((data.title !== undefined) && (data.genre !== undefined) &&
-          (data.rating !== undefined) && (data.cost !== undefined)) {
-          this.dialogRef.close(data);
-      }
+    onSubmit(data: any) {
+        console.log('submitted...');
+        console.log(data);
+        if ((data.title !== undefined) && (data.genre !== undefined) &&
+            (data.rating !== undefined) && (data.cost !== undefined)) {
+            this.dialogRef.close(data);
+        } else {
+            this.dialogRef.close(undefined);
+        }
 
+    }
 
-  }
 }
 
