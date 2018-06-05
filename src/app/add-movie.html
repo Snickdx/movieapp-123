@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Add a new Movie</h1>
+<div mat-dialog-content>
+  <form (ngSubmit) = onSubmit() #addForm>
+    <mat-form-field>
+      <input matInput [(ngModel)] = "data.title" placeholder = "Movie Title" name = "Movie Title" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)] = "data.genre" placeholder = "Genre" name = "Genre" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)] = "data.rating" placeholder = "Rating" name = "Rating" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput [(ngModel)] = "data.cost" placeholder = "Cost" name = "Cost" required>
+    </mat-form-field>
+    <br>
+
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial type="submit" color = "primary" [disabled]="!addForm.valid" >Submit</button>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+
+  </form>
+</div>
+
+
