@@ -1,6 +1,8 @@
 # Movieapp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.7.
+Currently, the submit button on the Add Movie Dialog is greyed out even when the form is filled.
+Both forms and the dialog box has their own way of handling the data, which is interfering with the validation process. 
 
 ## Development server
 
