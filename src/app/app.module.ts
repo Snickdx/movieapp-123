@@ -9,14 +9,15 @@ import {FormsModule} from '@angular/forms';
 import {MatIconModule, MatInputModule} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 
-import {AddMovieComponent, AppComponent} from './app.component';
+import {AppComponent} from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MovieModalComponent } from './movie-modal/movie-modal.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AddMovieComponent
+    MovieModalComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatIconModule
   ],
   providers: [],
-  entryComponents: [AddMovieComponent],
+  entryComponents: [MovieModalComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {
